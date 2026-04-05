@@ -4,6 +4,23 @@
 {% block title %}Quiénes Somos | LMR Abogados{% endblock %}
 
 {% block content %}
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    {% if messages %}
+        {% for message in messages %}
+            <div id="liveToast" class="toast show align-items-center text-white {% if message.tags == 'success' %}bg-success{% else %}bg-danger{% endif %} border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <i class="bi {% if message.tags == 'success' %}bi-check-circle{% else %}bi-exclamation-triangle{% endif %} me-2"></i> 
+                        {{ message }}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
 <main class="bg-white">
     <section class="py-5 mt-5">
         <div class="container">
@@ -65,7 +82,7 @@
 
                     <div class="card border-0 shadow-sm rounded-4 bg-light">
                         <div class="card-body p-4 p-md-5">
-                            <form action="#" method="POST" class="row g-4">
+                            <form action="{% url 'contact_submit' %}" method="POST" class="row g-4">
                                 {% csrf_token %}
                                 
                                 <div class="col-md-6">
@@ -84,9 +101,9 @@
                                 </div>
                                 
                                 <div class="col-md-12">
-                                    <label class="form-label small fw-bold text-secondary text-uppercase">Tipo de Activo de Interés</label>
-                                    <select name="interes" class="form-select form-select-lg border-0 shadow-sm">
-                                        <option selected disabled>Seleccione una opción</option>
+                                    <label class="form-label small fw-bold text-secondary text-uppercase">Tipo de Activo de Interés *</label>
+                                    <select name="interes" class="form-select form-select-lg border-0 shadow-sm" required>
+                                        <option value="" selected disabled>Seleccione una opción</option>
                                         <option value="integral">Traspaso Administración Integral</option>
                                         <option value="mixto">Punto de Venta Mixto</option>
                                         <option value="asesoria">Asesoría Jurídica / Fiscal</option>
@@ -95,7 +112,7 @@
                                 
                                 <div class="col-12">
                                     <label class="form-label small fw-bold text-secondary text-uppercase">Mensaje</label>
-                                    <textarea name="mensaje" class="form-control form-control-lg border-0 shadow-sm" rows="4" placeholder="Cuéntanos qué te interesa saber sobre esta administración..."></textarea>
+                                    <textarea name="mensaje" class="form-control form-control-lg border-0 shadow-sm" rows="4" placeholder="Cuéntanos qué te interesa saber..."></textarea>
                                 </div>
                                 
                                 <div class="col-12 text-center mt-5">
@@ -115,4 +132,14 @@
         </div>
     </section>
 </main>
+
+<script>
+    // Auto-ocultar el Toast después de 5 segundos
+    document.addEventListener('DOMContentLoaded', function() {
+        var toastElList = [].slice.call(document.querySelectorAll('.toast'))
+        var toastList = toastElList.map(function(toastEl) {
+            return new bootstrap.Toast(toastEl, { delay: 5000 }).show()
+        });
+    });
+</script>
 {% endblock %}
