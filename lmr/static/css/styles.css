@@ -1,0 +1,105 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+    /* Colores */
+    --color-primario: #0F172A;
+    --color-secundario: #285131;
+    --color-terciario: #475569;
+    --color-neutro: #0F1517;
+
+    /* Fuentes de texto */
+    --headline: "Newsreader", serif;
+    --body: "Manrope", sans-serif;
+    --label: "Inter", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, strong{
+    font-family: var(--headline);
+}
+p {
+    font-family: var(--body);
+}
+a {
+    font-family: var(--label);
+}
+
+/* Estilos específicos para la UI del buscador respetando tu base */
+.search-hero {
+    background-color: var(--color-secundario);
+    padding: 80px 0 120px 0;
+}
+
+.search-card {
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px rgba(15, 23, 42, 0.08);
+    margin-top: -80px;
+    padding: 40px;
+    border: 1px solid rgba(71, 85, 105, 0.1);
+}
+
+/* Tipografías aplicadas desde tus variables */
+.display-headline { font-family: var(--headline); color: #ffffff; }
+.text-body-custom { font-family: var(--body); }
+.label-custom { font-family: var(--label); text-transform: uppercase; letter-spacing: 0.5px; }
+
+/* Estilo de las Pills de Comunidad */
+.community-pill {
+    font-family: var(--label);
+    font-size: 0.85rem;
+    padding: 8px 18px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    color: var(--color-terciario);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    border-radius: 50px;
+}
+
+.community-pill:hover {
+    border-color: var(--color-secundario);
+    color: var(--color-secundario);
+    background: #f0fdf4;
+}
+
+.community-pill.active {
+    background-color: var(--color-secundario);
+    color: #ffffff;
+    border-color: var(--color-secundario);
+}
+
+/* Botón de búsqueda personalizado */
+.btn-search {
+    background-color: var(--color-primario);
+    color: white;
+    font-family: var(--label);
+    font-weight: 600;
+    border-radius: 12px;
+    transition: transform 0.2s;
+}
+
+.btn-search:hover {
+    background-color: var(--color-neutro);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Efecto de elevación al pasar el ratón por la tarjeta */
+.card-admin {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+.card-admin:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.15)!important;
+}
+
+.card-hover-effect {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover-effect:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 1rem 3rem rgba(0,0,0,0.12) !important;
+}

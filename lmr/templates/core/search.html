@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Catálogo de Traspasos{% endblock %}
+
+{% block content %}
+
+<main class="d-flex flex-column min-vh-100 bg-light w-100">
+
+    <div class="container-fluid py-5" style="background-color: #066a4c;">
+        <div class="container py-4 text-center text-md-start">
+            <h1 class="text-white fw-bold display-5 mb-2">Catálogo de traspasos</h1>
+            <p class="text-white-50 lead mb-0">Explora todas las administraciones disponibles y traspasadas.</p>
+        </div>
+    </div>
+
+    <div class="container" style="margin-top: -50px;">
+        <div class="bg-white p-4 p-md-5 rounded-4 shadow-lg border-0">
+            <form id="search-form" action="{% url 'search' %}" method="GET">
+                <div class="row g-3">
+                    
+                    <div class="col-lg-6">
+                        <div class="position-relative"> 
+                            <div class="input-group input-group-lg border rounded-3 overflow-hidden shadow-sm">
+                                <span class="input-group-text bg-white border-0"><i class="bi bi-search text-muted"></i></span>
+                                <input type="text" 
+                                    name="q" 
+                                    id="search-input"
+                                    value="{{ query|default:'' }}" 
+                                    class="form-control border-0 shadow-none fs-6" 
+                                    placeholder="Ciudad, provincia o nombre..."
+                                    autocomplete="off">
+                            </div>
+                            
+                            <div id="suggestions-box" class="list-group position-absolute w-100 shadow-lg d-none" 
+                                 style="z-index: 1050; top: 100%; margin-top: 8px; border-radius: 12px; overflow: hidden;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-lg-2">
+                        <select name="precio" class="form-select form-select-lg border rounded-3 fs-6 shadow-none">
+                            <option value="">Cualquier precio</option>
+                            <option value="150000" {% if precio_seleccionado == "150000" %}selected{% endif %}>Hasta 150.000 €</option>
+                            <option value="300000" {% if precio_seleccionado == "300000" %}selected{% endif %}>Hasta 300.000 €</option>
+                            <option value="500000" {% if precio_seleccionado == "500000" %}selected{% endif %}>Hasta 500.000 €</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3">
+                        <select name="orden" class="form-select form-select-lg border rounded-3 fs-6 shadow-none">
+                            <option value="-created_date" {% if orden_seleccionado == "-created_date" %}selected{% endif %}>Más recientes</option>
+                            <option value="price" {% if orden_seleccionado == "price" %}selected{% endif %}>Precio: Menor a Mayor</option>
+                            <option value="-price" {% if orden_seleccionado == "-price" %}selected{% endif %}>Precio: Mayor a Menor</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-1">
+                        <button type="submit" class="btn btn-dark btn-lg w-100 rounded-3 shadow-sm">
+                            <i class="bi bi-sliders"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="mt-4 pt-4 border-top">
+                    <div class="d-flex align-items-center mb-3">
+                        <i class="bi bi-geo-alt-fill me-2" style="color: #066a4c;"></i>
+                        <span class="text-muted small fw-bold text-uppercase">Filtrar por región</span>
+                    </div>
+                    
+                    <div class="d-flex flex-wrap gap-2">
+                        <a href="?q={{ query|default:'' }}&precio={{ precio_seleccionado }}&orden={{ orden_seleccionado }}" 
+                           class="btn btn-sm rounded-pill px-3 py-2 border {% if not comunidad_seleccionada %}btn-success text-white border-success{% else %}btn-outline-secondary text-dark{% endif %}">
+                            Todas
+                        </a>
+
+                        {% for code, name in communities %}
+                        <a href="?comunidad={{ code }}&q={{ query|default:'' }}&precio={{ precio_seleccionado }}&orden={{ orden_seleccionado }}" 
+                           class="btn btn-sm rounded-pill px-3 py-2 border d-flex align-items-center {% if comunidad_seleccionada == code %}btn-success text-white border-success{% else %}btn-outline-secondary text-dark{% endif %}">
+                            {{ name }}
+                            <span class="badge ms-2 {% if comunidad_seleccionada == code %}bg-white text-success{% else %}bg-light text-muted border{% endif %}">
+                                {% for c_key, c_val in counts_dict.items %}
+                                    {% if c_key == code %}{{ c_val|intcomma }}{% endif %}
+                                {% endfor %}
+                            </span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container py-5 mt-4 flex-grow-1">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for admin in results %}
+            <div class="col">
+                <div class="card card-admin h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative {% if admin.status != 'AVAILABLE' %}bg-light opacity-75{% endif %}">
+                    
+                    {% if admin.status == 'AVAILABLE' %}
+                    <a href="{% url 'administration_detail' admin.id %}" class="stretched-link"></a>
+                    {% endif %}
+
+                    <div class="position-relative">
+                        <img src="{{ admin.image_url|default:'/static/img/index.jpg' }}" 
+                             class="card-img-top" alt="{{ admin.name }}" 
+                             style="height: 220px; object-fit: cover; {% if admin.status != 'AVAILABLE' %}filter: grayscale(1);{% endif %}">
+                        
+                        {% if admin.featured and admin.status == 'AVAILABLE' %}
+                        <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2 shadow-sm border-0" 
+                              style="background-color: #066a4c !important; z-index: 2;">
+                            Destacado
+                        </span>
+                        {% endif %}
+
+                        {% if admin.status != 'AVAILABLE' %}
+                        <span class="badge bg-dark position-absolute top-0 end-0 m-3 px-3 py-2 shadow-sm border-0" style="z-index: 2;">
+                            No disponible
+                        </span>
+                        {% endif %}
+                        
+                        <div class="position-absolute bottom-0 start-0 m-3 text-white small fw-medium" style="z-index: 2;">
+                            <i class="bi bi-geo-alt-fill me-1"></i> {{ admin.city }}, {{ admin.province }}
+                        </div>
+                        
+                        <div class="position-absolute bottom-0 start-0 w-100" 
+                             style="height: 40%; background: linear-gradient(transparent, rgba(0,0,0,0.6));"></div>
+                    </div>
+
+                    <div class="card-body p-4 d-flex flex-column">
+                        <h5 class="card-title fw-bold mb-1">{{ admin.name }}</h5>
+                        
+                        <div class="d-flex flex-wrap gap-3 mb-4">
+                            <div class="d-flex align-items-center {% if admin.status == 'AVAILABLE' %}text-success{% else %}text-muted{% endif %} small">
+                                <i class="bi bi-graph-up-arrow me-1"></i>
+                                <span>{{ admin.annual_sales|floatformat:0|intcomma }} €/año</span>
+                            </div>
+                            
+                            <div class="d-flex align-items-center text-muted small">
+                                <i class="bi bi-r-square me-1"></i>
+                                <span>
+                                    {% if admin.square_meters %}
+                                        {{ admin.square_meters|floatformat:1|intcomma }} m²
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+
+                        <hr class="text-muted opacity-25 mt-auto">
+                        
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <div>
+                                <p class="text-muted small mb-0">Precio traspaso</p>
+                                <h4 class="fw-bold mb-0 {% if admin.status == 'AVAILABLE' %}text-dark{% else %}text-muted{% endif %}">
+                                    {{ admin.price|floatformat:0|intcomma }} €
+                                </h4>
+                            </div>
+                            
+                            <div class="btn btn-light rounded-circle shadow-sm border d-flex align-items-center justify-content-center" 
+                               style="width: 45px; height: 45px;">
+                                {% if admin.status == 'AVAILABLE' %}
+                                    <i class="bi bi-arrow-right text-success"></i>
+                                {% else %}
+                                    <i class="bi bi-lock-fill text-muted"></i>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center py-5">
+                <div class="bg-white p-5 rounded-4 border shadow-sm">
+                    <i class="bi bi-search display-1 text-muted opacity-25"></i>
+                    <h3 class="mt-4 fw-bold">0 resultados encontrados</h3>
+                    <p class="text-muted mb-4">No hay administraciones que coincidan con estos filtros.</p>
+                    <a href="{% url 'search' %}" class="btn btn-success rounded-pill px-4" style="background-color: #066a4c; border: none;">
+                        Limpiar filtros
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'js/core/search.js' %}"></script>
+{% endblock %}

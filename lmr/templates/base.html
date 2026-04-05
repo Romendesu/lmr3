@@ -1,0 +1,119 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <title>{% block title %}LMR - ABOGADOS{% endblock %}</title>
+    <!-- Bootstrap  -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header class="navbar navbar-expand-lg bg-white shadow-sm py-3">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-decoration-none" href="/" style="color: #066a4c;">
+                LMR - ABOGADOS
+            </a>
+
+            <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center gap-3">
+
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold px-0 mx-2 {% if request.path == '/' %}border-bottom border-2{% endif %}" 
+                        href="/" 
+                        onmouseover="if(!this.classList.contains('border-bottom')) this.style.textDecoration='underline'" 
+                        onmouseout="this.style.textDecoration='none'"
+                        style="{% if request.path == '/' %}color: #066a4c; border-color: #066a4c !important;{% else %}color: #6c757d;{% endif %} text-underline-offset: 12px; text-decoration-thickness: 2px;">
+                            Inicio
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold px-0 mx-2 {% if 'informacion' in request.path %}border-bottom border-2{% endif %}" 
+                        href="/informacion"
+                        onmouseover="if(!this.classList.contains('border-bottom')) this.style.textDecoration='underline'" 
+                        onmouseout="this.style.textDecoration='none'"
+                        style="{% if 'informacion' in request.path %}color: #066a4c; border-color: #066a4c !important;{% else %}color: #6c757d;{% endif %} text-underline-offset: 12px; text-decoration-thickness: 2px;">
+                            ¿Quiénes somos?
+                        </a>
+                    </li>
+
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn px-4 py-2 fw-bold text-white shadow-sm rounded-pill" 
+                        href="/catalogo"
+                        onmouseover="this.style.backgroundColor='#045039'; this.style.transform='scale(1.02)';"
+                        onmouseout="this.style.backgroundColor='#066a4c'; this.style.transform='scale(1)';"
+                        style="background-color: #066a4c; border: none; transition: all 0.2s ease;">
+                            Ver Traspasos
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </header>
+    <!-- CONTENIDO -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- FOOTER -->
+    <footer class="text-white py-5" style="background-color: #000000;">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <div class="d-flex align-items-center mb-3">
+                        <h4 class="fw-bold mb-0">LMR-ABOGADOS</h4>
+                    </div>
+                    <p class="pe-lg-5" style="font-size: 0.95rem; line-height: 1.6;">
+                        Somos la plataforma líder en España para el traspaso de administraciones de lotería. 
+                        Conectamos compradores y vendedores con total transparencia y seguridad.
+                    </p>
+                    <div class="d-flex gap-2 mt-4">
+                        <a href="https://www.facebook.com/people/Lmr-Traspaso-Loterias/pfbid021pvXA5Aaj6QkPJCz7kcDmKyNnFAeFoDjkvJ1cfQYGrN8bfj8sVXzqZS78VhtAtXLl/?mibextid=wwXIfr&rdid=Y5Goab1NSxMKp3LP&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1YrYBpazKN%2F%3Fmibextid%3DwwXIfr" class="btn btn-outline-secondary border-0 p-2" style="background-color: rgba(255,255,255,0.05);"><i class="bi bi-facebook"></i></a>
+                        <a href="https://x.com/lmrabogados" class="btn btn-outline-secondary border-0 p-2" style="background-color: rgba(255,255,255,0.05);"><i class="bi bi-twitter-x"></i></a>
+                        <a href="https://www.instagram.com/lmr_traspasodeloterias/" class="btn btn-outline-secondary border-0 p-2" style="background-color: rgba(255,255,255,0.05);"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-lg-4">
+                    <h6 class="fw-bold mb-4 text-uppercase small" style="letter-spacing: 0.1em;">Contacto</h6>
+                    <ul class="list-unstyled small text-secondary">
+                        <li class="mb-3 d-flex align-items-center">
+                            <i class="bi bi-envelope me-3"></i> info@loteriastraspaso.es
+                        </li>
+                        <li class="mb-3 d-flex align-items-center">
+                            <i class="bi bi-telephone me-3"></i> +34 900 123 456
+                        </li>
+                        <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-clock me-3"></i> 
+                            <span>Lunes a Viernes<br>9:00 - 18:00</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <hr class="my-5" style="border-color: rgba(255,255,255,0.1);">
+
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="small text-secondary mb-0">© 2026 LoteriasTraspaso. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end mt-3 mt-md-0">
+                    <a href="#" class="text-secondary text-decoration-none small me-3">Política de privacidad</a>
+                    <a href="#" class="text-secondary text-decoration-none small">Términos de uso</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>    {% block extra_js %}{% endblock %}
+
+</body>
+</html>

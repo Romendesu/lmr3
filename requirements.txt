@@ -1,0 +1,4 @@
+Django
+python-dotenv
+psycopg2
+Faker

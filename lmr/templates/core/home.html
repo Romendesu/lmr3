@@ -1,0 +1,256 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+Inicio | LMR Abogados
+{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container py-5 mt-5 mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <span class="badge bg-success mb-3 p-2 px-3" style="background-color: #066a4c !important;">Traspasos de Administraciones</span>
+                <h1 class="display-2 mt-4 fw-bold">
+                    Expertos en Traspasos de Administraciones de Loterías
+                </h1>
+                <p class="mt-4 text-muted" style="max-width: 500px;">
+                    Protegemos su patrimonio y aseguramos la continuidad de su negocio 
+                    mediante una gestión jurídica y fiscal altamente especializada en SELAE.
+                </p>
+                <div class="mt-4">
+                    <a href="{% url 'search' %}" class="btn btn-success btn-lg rounded-pill px-4 shadow-sm" style="background-color: #066a4c; border: none;">
+                        Explorar catálogo
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-6 mt-5 mt-md-0">
+                <div class="position-relative">
+                    <img src="/static/img/index.jpg" 
+                        class="img-fluid rounded-4 shadow-lg w-100" 
+                        alt="Administraciones de lotería"
+                        style="height: 400px; object-fit: cover;">
+
+                    <div class="position-absolute top-0 start-0 w-100 h-100 rounded-4"
+                        style="background: linear-gradient(to top, rgba(0,0,0,0.4), transparent);">
+                    </div>
+
+                    <div class="card border-0 shadow position-absolute bottom-0 start-0 m-4"
+                        style="max-width: 220px; backdrop-filter: blur(6px); background: rgba(255,255,255,0.9);">
+                        <div class="card-body">
+                            <h2 class="fw-bold mb-1">+{{ total_administraciones|default:"0" }}</h2>
+                            <p class="mb-0 small text-muted">
+                                Administraciones disponibles
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5 mt-5 mb-4">
+        <div class="d-flex flex-column align-items-center text-center mb-5">
+            <span class="badge bg-success mb-3 p-2 px-3" style="background-color: #066a4c !important;">¿Cómo funciona?</span>
+            <h1 class="fw-bold">El proceso de traspaso más sencillo</h1>
+            <p class="text-muted" style="max-width: 700px;">Hemos simplificado el complejo proceso de adquirir una administración de lotería. Te acompañamos en cada paso, desde la búsqueda inicial hasta la firma del traspaso.</p>
+        </div>
+        
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 position-relative overflow-hidden" style="background-color: #f8fafd;">
+                    <span class="position-absolute top-0 end-0 m-3 display-4 fw-bold opacity-10 text-secondary" style="font-size: 4rem; pointer-events: none;">01</span>
+                    <div class="card-body">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-3 mb-4 shadow" style="width: 50px; height: 50px; background-color: #066a4c !important;">
+                            <i class="bi bi-search text-white fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Explora el catálogo</h5>
+                        <p class="text-muted small">Navega por nuestra selección de administraciones en toda España, filtradas por comunidad autónoma.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 position-relative overflow-hidden" style="background-color: #f8fafd;">
+                    <span class="position-absolute top-0 end-0 m-3 display-4 fw-bold opacity-10 text-secondary" style="font-size: 4rem; pointer-events: none;">02</span>
+                    <div class="card-body">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-3 mb-4 shadow" style="width: 50px; height: 50px; background-color: #066a4c !important;">
+                            <i class="bi bi-file-earmark-text text-white fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Solicita información</h5>
+                        <p class="text-muted small">Contacta con nosotros para obtener datos detallados, incluyendo balances financieros y situación legal.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 position-relative overflow-hidden" style="background-color: #f8fafd;">
+                    <span class="position-absolute top-0 end-0 m-3 display-4 fw-bold opacity-10 text-secondary" style="font-size: 4rem; pointer-events: none;">03</span>
+                    <div class="card-body">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-3 mb-4 shadow" style="width: 50px; height: 50px; background-color: #066a4c !important;">
+                            <i class="bi bi-people text-white fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Asesoramiento</h5>
+                        <p class="text-muted small">Nuestro equipo de expertos te guiará en la negociación y validación de la concesión ante SELAE.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="card h-100 border-0 shadow-sm rounded-4 p-3 position-relative overflow-hidden" style="background-color: #f8fafd;">
+                    <span class="position-absolute top-0 end-0 m-3 display-4 fw-bold opacity-10 text-secondary" style="font-size: 4rem; pointer-events: none;">04</span>
+                    <div class="card-body">
+                        <div class="d-inline-flex align-items-center justify-content-center rounded-3 mb-4 shadow" style="width: 50px; height: 50px; background-color: #066a4c !important;">
+                            <i class="bi bi-check-circle text-white fs-4"></i>
+                        </div>
+                        <h5 class="fw-bold mb-3">Cierra tu traspaso</h5>
+                        <p class="text-muted small">Completamos el traspaso con todas las garantías legales, asegurando una transición fluida.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5 my-5 bg-light rounded-5 shadow-sm">
+        <div class="row align-items-center p-4 p-md-5">
+            <div class="col-lg-7">
+                <span class="badge bg-success mb-3 p-2 px-3" style="background-color: #066a4c !important;">Concepto Clave</span>
+                <h2 class="display-5 fw-bold mb-4">¿Qué es exactamente un traspaso de lotería?</h2>
+                <p class="lead text-dark">
+                    El traspaso de una administración de lotería no es simplemente la venta de un local; es la <strong>cesión de una concesión administrativa de SELAE</strong>.
+                </p>
+                <p class="text-muted">
+                    Consiste en transferir la titularidad de la licencia de explotación. Al adquirir un traspaso, el nuevo titular hereda la cartera de clientes, la ubicación estratégica y el derecho legal para comercializar juegos del Estado bajo la normativa vigente.
+                </p>
+                
+                <div class="row mt-4 g-3">
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span>Licencia Oficial SELAE</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                            <span>Negocio en funcionamiento</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5 mt-5 mt-lg-0">
+                <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="card-header border-0 text-white text-center py-3" style="background-color: #066a4c;">
+                        <h5 class="mb-0">Aspectos a considerar</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-start border-0 px-0">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Ubicación</div>
+                                    <small class="text-muted">Debe cumplir distancias mínimas legales.</small>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start border-0 px-0">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Comisiones</div>
+                                    <small class="text-muted">Ingresos fijos por cada décimo o apuesta.</small>
+                                </div>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-start border-0 px-0">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold">Garantías</div>
+                                    <small class="text-muted">Obligatorio presentar un aval ante SELAE.</small>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="https://www.selae.es/" target="_blank" class="btn btn-dark w-100 mt-3 rounded-pill shadow-sm">
+                            Saber más sobre la normativa
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container py-5 mb-5">
+        <div class="d-flex justify-content-between align-items-end mb-4">
+            <div>
+                <span class="badge rounded-pill px-3 py-2 mb-2" style="background-color: #e0f9f0; color: #066a4c;">Destacados</span>
+                <h2 class="fw-bold">Oportunidades seleccionadas</h2>
+            </div>
+            <a href="{% url 'search' %}" class="text-success text-decoration-none fw-semibold mb-1">
+                Ver todo el catálogo <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="row g-4">
+            {% for admin in destacadas %}
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden position-relative card-hover-effect">
+                        <a href="{% url 'administration_detail' admin.id %}" class="stretched-link"></a>
+                        <div class="position-relative">
+                            <img src="{{ admin.image_url|default:'/static/img/index.jpg' }}" 
+                                 class="card-img-top" alt="{{ admin.name }}" 
+                                 style="height: 200px; object-fit: cover;">
+                            
+                            <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2 shadow-sm" style="background-color: #066a4c !important; z-index: 2;">
+                                Destacado
+                            </span>
+                            
+                            <div class="position-absolute bottom-0 start-0 m-3 text-white small" style="z-index: 2;">
+                                <i class="bi bi-geo-alt-fill me-1"></i> {{ admin.city }}, {{ admin.province }}
+                            </div>
+                            <div class="position-absolute bottom-0 start-0 w-100" style="height: 40%; background: linear-gradient(transparent, rgba(0,0,0,0.6));"></div>
+                        </div>
+
+                        <div class="card-body p-4">
+                            <h5 class="card-title fw-bold mb-1">{{ admin.name }}</h5>
+                            <p class="text-success small mb-4">
+                                <i class="bi bi-graph-up-arrow me-1"></i> Ventas anuales: {{ admin.annual_sales|floatformat:0|intcomma }} €
+                            </p>
+                            <hr class="text-muted opacity-25">
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div>
+                                    <p class="text-muted small mb-0">Precio traspaso</p>
+                                    <h4 class="fw-bold text-dark mb-0">{{ admin.price|floatformat:0|intcomma }} €</h4>
+                                </div>
+                                <div class="btn btn-light rounded-circle shadow-sm border d-flex align-items-center justify-content-center" style="width: 45px; height: 45px;">
+                                    <i class="bi bi-arrow-right text-secondary"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12">
+                    <div class="text-center py-5 px-4 rounded-4 border border-dashed" style="background-color: #f8fafd; border: 2px dashed #dee2e6 !important;">
+                        <div class="mb-4">
+                            <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-3" 
+                                 style="width: 80px; height: 80px; background-color: #e0f9f0;">
+                                <i class="bi bi-search text-success" style="font-size: 2rem; color: #066a4c !important;"></i>
+                            </div>
+                            <h3 class="fw-bold text-dark">Próximas oportunidades en camino</h3>
+                            <p class="text-muted mx-auto" style="max-width: 500px;">
+                                Actualmente estamos validando nuevas administraciones de lotería en toda España. 
+                                Mientras tanto, puedes consultar nuestro catálogo completo.
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="{% url 'search' %}" class="btn btn-success rounded-pill px-4 py-2" style="background-color: #066a4c; border: none;">
+                                Ver catálogo completo
+                            </a>
+                            <a href="/informacion" class="btn btn-outline-secondary rounded-pill px-4 py-2">
+                                Contactar ahora
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</main>
+{% endblock %}
