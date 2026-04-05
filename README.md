@@ -19,7 +19,7 @@ El sistema está desarrollado en Django, un framework web de Python, y está est
    ```
    pip install -r requirements.txt
    ```
-5. Configura la base de datos (por defecto usa SQLite):
+5. Configura la base de datos (por defecto usa PostgreSQL):
    ```
    python lmr/manage.py migrate
    ```
